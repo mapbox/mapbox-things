@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
         setMessage(String.format(Locale.US,
-          "The distance between Dupont Circle and The White House is %.1f meters (a %.1f minutes walk): ",
+          "The distance between Dupont Circle and The White House is %.1f meters (a %.1f minutes walk).",
           response.body().getRoutes().get(0).getDistance(),
           response.body().getRoutes().get(0).getDuration() / 60.0));
       }
