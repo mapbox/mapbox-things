@@ -1,4 +1,4 @@
-package com.mapbox.iotled;
+package com.mapbox.rainbowhat;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     // Context of the app under test.
     Context appContext = InstrumentationRegistry.getTargetContext();
 
-    assertEquals("com.mapbox.iotled", appContext.getPackageName());
+    assertEquals("com.mapbox.rainbowhat", appContext.getPackageName());
   }
 }

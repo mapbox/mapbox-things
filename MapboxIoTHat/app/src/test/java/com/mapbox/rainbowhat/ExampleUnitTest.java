@@ -1,4 +1,4 @@
-package com.mapbox.iotled;
+package com.mapbox.rainbowhat;
 
 import org.junit.Test;
 

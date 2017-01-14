@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.1"
     defaultConfig {
-        applicationId "com.mapbox.iotled"
+        applicationId "com.mapbox.rainbowhat"
         minSdkVersion 24
         targetSdkVersion 25
         versionCode 1
@@ -22,14 +22,22 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    // App compat
     compile 'com.android.support:appcompat-v7:25.1.0'
 
     // Android Things
     provided 'com.google.android.things:androidthings:0.1-devpreview'
-    compile 'com.google.android.things.contrib:driver-ht16k33:0.1'
+    compile 'com.google.android.things.contrib:driver-rainbowhat:0.1'
 
-    // Testing
+    // MAS
+    compile ('com.mapbox.mapboxsdk:mapbox-java-services:1.3.1@jar') {
+        transitive=true
+    }
+
+    // RSS reader
+    compile ('com.squareup.okhttp3:okhttp:3.5.0')
+    compile ('com.rometools:rome:1.7.0')
+    compile ('joda-time:joda-time:2.9.6')
+
     testCompile 'junit:junit:4.12'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
