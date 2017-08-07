@@ -74,12 +74,12 @@ public class ActionManager {
           .setAccessToken(Constants.MAPBOX_ACCESS_TOKEN)
           .setOrigin(wdc)
           .setDestination(nyc)
-          .setProfile(DirectionsCriteria.PROFILE_DRIVING)
+          .setProfile(DirectionsCriteria.PROFILE_DRIVING_TRAFFIC)
           .setOverview(DirectionsCriteria.OVERVIEW_SIMPLIFIED)
           .build();
       Response<DirectionsResponse> result = client.executeCall();
       String voice = String.format(Locale.US,
-          "The DC office is about %.0f kilometers away, that's a %.0f minutes drive.",
+          "New York to Washington DC is about %.0f kilometers away, that's a %.0f minutes drive.",
           result.body().getRoutes().get(0).getDistance() / 1000.0,
           result.body().getRoutes().get(0).getDuration() / 60.0);
       String url = getRouteMap(wdc, nyc, result.body().getRoutes().get(0).getGeometry());
