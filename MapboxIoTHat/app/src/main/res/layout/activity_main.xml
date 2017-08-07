@@ -13,7 +13,14 @@
 
     <TextView
         android:id="@+id/text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!"/>
+
+    <ImageView
+        android:id="@+id/static_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Static map image."/>
+
 </RelativeLayout>

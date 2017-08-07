@@ -3,6 +3,7 @@ package com.mapbox.rainbowhat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.things.contrib.driver.button.Button;
@@ -10,6 +11,7 @@ import com.google.android.things.contrib.driver.ht16k33.AlphanumericDisplay;
 import com.google.android.things.contrib.driver.ht16k33.Ht16k33;
 import com.google.android.things.contrib.driver.rainbowhat.RainbowHat;
 import com.google.android.things.pio.Gpio;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
   private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
   private TextView textView;
+  private ImageView imageView;
 
   private AppTextToSpeech appTextToSpeech;
   private ActionManager actionManager;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     textView = (TextView) findViewById(R.id.text_view);
+    imageView = (ImageView) findViewById(R.id.static_map);
 
     appTextToSpeech = new AppTextToSpeech(this);
     actionManager = new ActionManager();
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupLedRed() throws IOException {
-    ledRed = RainbowHat.openLed(RainbowHat.LED_RED);
+    ledRed = RainbowHat.openLedRed();
   }
 
   private void switchRedLed(boolean on) throws IOException {
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupLedGreen() throws IOException {
-    ledGreen = RainbowHat.openLed(RainbowHat.LED_GREEN);
+    ledGreen = RainbowHat.openLedGreen();
   }
 
   private void switchGreenLed(boolean on) throws IOException {
@@ -89,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupButtonA() throws IOException {
-    buttonA = RainbowHat.openButton(RainbowHat.BUTTON_A);
+    buttonA = RainbowHat.openButtonA();
     buttonA.setOnButtonEventListener(new Button.OnButtonEventListener() {
       @Override
       public void onButtonEvent(Button button, boolean pressed) {
@@ -100,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
           new Thread(new Runnable() {
             @Override
             public void run() {
-              appTextToSpeech.say(actionManager.getActionRouteCommute());
+              String[] result = actionManager.getActionRouteCommute();
+              appTextToSpeech.say(result[0]);
+              loadImage(result[1]);
             }
           }).start();
         }
@@ -108,8 +114,16 @@ public class MainActivity extends AppCompatActivity {
     });
   }
 
+  private void loadImage(String url) {
+    try {
+      Picasso.with(this).load(url).centerCrop().into(imageView);
+    } catch (Exception e) {
+      setMessage("Error: " + e.getMessage());
+    }
+  }
+
   private void setupButtonB() throws IOException {
-    buttonB = RainbowHat.openButton(RainbowHat.BUTTON_B);
+    buttonB = RainbowHat.openButtonB();
     buttonB.setOnButtonEventListener(new Button.OnButtonEventListener() {
       @Override
       public void onButtonEvent(Button button, boolean pressed) {
@@ -129,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void setupButtonC() throws IOException {
-    buttonC = RainbowHat.openButton(RainbowHat.BUTTON_C);
+    buttonC = RainbowHat.openButtonC();
     buttonC.setOnButtonEventListener(new Button.OnButtonEventListener() {
       @Override
       public void onButtonEvent(Button button, boolean pressed) {
