@@ -1,31 +1,30 @@
 package com.mapbox.iotmap;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.mapbox.mapboxsdk.MapboxAccountManager;
+import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Skeleton of a Mapbox-powered Android Things activity.
+ */
+public class MainActivity extends Activity {
 
-  private static final String LOG_TAG = MainActivity.class.getName();
+  private static final String LOG_TAG = "MainActivity";
 
   private MapView mapView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
-    // Mapbox access token is configured here. This needs to be called either in your application
-    // object or in the same activity which contains the mapview.
-    MapboxAccountManager.start(this, "");
-
+    Mapbox.getInstance(getApplicationContext(), "");
     setContentView(R.layout.activity_main);
 
-    mapView = (MapView) findViewById(R.id.mapView);
+    mapView = findViewById(R.id.mapView);
     mapView.onCreate(savedInstanceState);
     mapView.getMapAsync(new OnMapReadyCallback() {
       @Override
@@ -39,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
   public void onResume() {
     super.onResume();
     mapView.onResume();
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    mapView.onStart();
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+    mapView.onStop();
   }
 
   @Override
